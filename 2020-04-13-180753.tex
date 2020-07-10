@@ -1,16 +1,15 @@
 \documentclass[german,12pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[backend=biber,
-style=authoryear,
+style=alphabetic,
 ]{biblatex}
-\addbibresource{Literatur_Primes.bib}
+\addbibresource{literatur.bib}
 
 \usepackage{soul}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{sagetex}
+%\usepackage{sagetex}
 
 % set font encoding for PDFLaTeX, XeLaTeX, or LuaTeX
 \usepackage{ifxetex,ifluatex}
@@ -27,7 +26,6 @@ style=authoryear,
 \usepackage{hyperref}
 \usepackage{parskip}
 \usepackage{csquotes}
-\usepackage{graphicx}
 
 \title{Bachelorarbeit\\Prime Time for a Prime Number}
 \author{Rupertus Weigner}
@@ -52,7 +50,7 @@ Die Bachelor Arbeit verfasse ich im Themenbereich der Primzahlen. Ausgangspunkt 
 \begin{center}
 $bigP_{2016} = 2^{74.207.281}-1$ $\rightarrow$ 2016 von Cooper, u.a.
 \end{center}\
-\\Diese Primzahl ist zu groß um ausgeschrieben zu werden. Um es sich bildlich besser vorstellen zu können würde diese Zahl 6.000 bis 7.000 Blätter füllen können. Dies ist abhängig von der Größe der verwendeten Blätter. Um diese Zahl von menschenhand auszuschreiben würde eine Person mehr als drei Monate dafür benötigen. Eine solche Kombination an Zahlen nennt man "Mersenne-Primzahl"\ (The New York Times 2016).\
+\\Diese Primzahl ist zu groß um ausgeschrieben zu werden. Um es sich bildlich besser vorstellen zu können würde diese Zahl 6.000 bis 7.000 DIN-A4-Blätter füllen können. Dies ist abhängig von der Schriftgröße. Um diese Zahl von menschenhand auszuschreiben würde eine Person mehr als drei Monate dafür benötigen. Eine solche Kombination an Zahlen nennt man "Mersenne-Primzahl"\ (The New York Times 2016).\
 Im Laufe dieser Arbeit wurden jedoch 2 weitere größere Mersenne-Primzahlen entdeckt:\\
 \begin{center}
 $M_{77.232.917} = 2^{77.232.917}-1$ $\rightarrow$ 2017 von Jonathan Pace (GIMPS)\\
@@ -70,20 +68,20 @@ $M_{82.589.933} = 2^{82.589.933}-1$ $\rightarrow$ 2018 von Patrick Laroche (GIMP
 Hier werden die in dieser Arbeit verwendeten und beschriebenen Symbole für einen schnellen Überblick erklärt:\\
 \begin{tabbing}
 xxxxxxxxxxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxx\kill
-\large Symbol             \> \large Erläuterung\\
-\\$\mathbb{N}$            \> natürliche Zahlen\\
-\\$\mathbb{Z}$            \> ganze Zahlen\\
-\\$\mathbb{Q}$            \> rationale Zalen\\
-\\$\mathbb{I}$            \> irrationale Zahlen\\
-\\$\mathbb{R}$            \> reelle Zahlen\\
-\\ggT                     \> größter gemeinsamer Teiler\\
-\\kgV                     \> kleinstes gemeinsames Vielfaches\\
-\\$n$ $\in$ $\mathbb{N}$  \> das Element n ist in $\mathbb{N}$ enthalten\\
-\\$k \mid n$              \> die Zahl $k$ teilt die Zahl $n$\\
-\\$k \nmid n$             \> die Zahl $k$ teilt die Zahl $n$ nicht\\
-\\$\lceil{x}\rceil$       \> kleinste ganze Zahl größer oder gleich $x$\\
-\\:=                      \> definitionsgemäß\\
-\\$a\equiv b$ (mod $n$)   \> $a$ ist kongruent zu $b$ modulo $n$
+\large Symbol           \> \large Erläuterung\\
+\\$\mathbb{N}$          \> natürliche Zahlen\\
+\\$\mathbb{Z}$          \> ganze Zahlen\\
+\\$\mathbb{Q}$          \> rationale Zalen\\
+\\$\mathbb{I}$          \> irrationale Zahlen\\
+\\$\mathbb{R}$          \> reelle Zahlen\\
+\\ggT                   \> größter gemeinsamer Teiler\\
+\\kgV                   \> kleinstes gemeinsames Vielfaches\\
+\\n $\in$ $\mathbb{N}$  \> das Element n ist in $\mathbb{N}$ enthalten\\
+\\$k \mid n$            \> die Zahl $k$ teilt die Zahl $n$\\
+\\$k \nmid n$           \> die Zahl $k$ teilt die Zahl $n$ nicht\\
+\\$\lceil{x}\rceil$     \> kleinste ganze Zahl größer oder gleich $x$\\
+\\:=                    \> definitionsgemäß\\
+\\$a\equiv b$ (mod $n$) \> $a$ ist kongruent zu $b$ modulo $n$
 
 \end{tabbing}
 \newpage
@@ -99,6 +97,7 @@ xxxxxxxxxxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxx\kill
 Bevor wir in die komplexe Materie der Primzahlen eintauchen können muss in erster Linie erörtert werden aus was sich Zahlen zusammensetzen und nach welchen Rechenregeln sie zerlegbar oder zu vervielfachen sind. Der nächste Abschnitt wird vielen Lesern und Leserinnen noch von der Schulzeit bekannt vorkommen. Die folgenden Seiten werden teils Auffrischung, teils neu sein und werden einen guten Einblick in die Zahlentheorie ermöglichen. Beschrieben wird in Kürze unter anderem in wie weit man Zahlen eingliedern kann und welchen Rechenregeln sie unterliegen.
 
 \subsection{Mathematische Grundregeln}
+%So Eigenschaften wie Assoziativitaet, Kommutativitaet, Distributivitaet waeren hier noch hilfreich
 Aus dem Schulunterricht kennt man die klassischen arithmetischen Operationen, wie Addition, Subtraktion, Multiplikation und Division. Die Berechnung dieser sind simpler Natur und lauten:
 \begin{itemize}
 \item \textbf{Addition} $\to$ $x = x_{1} + x_{2} + \cdot\cdot\cdot + x_{n}$
@@ -120,36 +119,52 @@ Etwas komplizierter hingegen ist das \textbf{Quadrieren}. Quadrieren bedeutet, d
 Die Thematik des Quadrierens wird im späteren Verlauf dieser Arbeit nochmals aufgegriffen und vertieft. 
 
 \subsection{Eingliederung von Zahlen}
-Zum Einen gibt es \textbf{natürliche Zahlen} - $\mathbb{N}$ - \{0, 1, 2, 3, 4, ..., n\}. Man erkennt, dass natürliche Zahlen bei der Zahl 0 beginnen und weiters ausschließlich aus nicht negativen ganzen Zahlen zusammengesetzt sind. Diese Zahlenreihe lässt sich bis ins unendliche weiterführen. Hier gibt es weitere Gliederungen:\
+%Hier wäre ein Hinweis auf die formale Definition der nat. Z., etwa durch die Peano-Axiome, oder das John-von-Neumann-Modell möglich.
+Zum Einen gibt es \textbf{natürliche Zahlen} - $\mathbb{N}$ - \{0, 1, 2, 3, 4, ...\}. Man erkennt, dass natürliche Zahlen bei der Zahl 0 beginnen und weiters ausschließlich aus nicht negativen ganzen Zahlen zusammengesetzt sind. Diese Zahlenreihe lässt sich beliebig lang weiterführen. Hier gibt es weitere Gliederungen:\
 \begin{itemize}
 \item $\mathbb{N}^*$ - sind alle natürlichen Zahlen ohne der Zahl 0
 \item $\mathbb{N}_g$ - beinhaltet alle natürlichen geraden Zahlen
+%erhaelt man durch Multiplikation aller Elemente aus N mit 2
 \item $\mathbb{N}_u$ - beinhaltet alle natürlichen ungeraden Zahlen
+%erhaelt man durch die Operation 2n-1 auf N*
 \end{itemize}
-Da die Zahlen von $\mathbb{N}$ aus rein positiven Zahlen bestehen ist das Rechnen mit diesen nur eingeschränkt möglich. Zum Einen erlauben sie es nicht willkürlich Zahlen zu subtrahieren und zum Anderen können diese nicht zufällig miteinander dividiert oder gar Wurzeln gezogen werden.
+Da die Zahlen von $\mathbb{N}$ aus rein positiven Zahlen 
+%was nun? positive oder nicht negative Zahlen? 0 ist nicht positiv
+%Du koenntest das auch explizit angeben, z.b. Die Subtraktion zweier Zahlen m, n aus N ist definiert, wenn m <= n. Die Division wenn m | n
+bestehen ist das Rechnen mit diesen nur eingeschränkt möglich. Zum Einen erlauben sie es nicht willkürlich Zahlen zu subtrahieren und zum Anderen können diese nicht zufällig miteinander dividiert oder gar Wurzeln gezogen werden.
 
-\textbf{Ganze Zahlen} - $\mathbb{Z}$ - \{-4, -3, -2, -1, 0, 1, 2, 3, 4, ..., n\}. Diese setzen sich wie die natürlichen Zahlen nur aus ganzen Zahlen zusammen, jedoch bestehen diese im Gegensatz zu natürlichen Zahlen nicht nur aus positiven, sondern auch aus negativen Zahlen. Ebenfalls könnte man diese Zahlenreihe bis in die Unendlichkeit fortsetzen, jedoch in diesem Fall in die negative so wie auch in die positive Richtung. Auch hier gibt es wieder eine weitere Untergruppe:\
+\textbf{Ganze Zahlen} - $\mathbb{Z} = \mathbb{N} \cup \mathbb\{-n | n \in \mathbb{N}\}$. Diese setzen sich wie die natürlichen Zahlen nur aus 
+%??? das definierst du ja gerade.
+ganzen Zahlen zusammen, jedoch bestehen diese im Gegensatz zu natürlichen Zahlen nicht nur aus % nicht negativen. Wie waers mit: Diese Menge enthaelt auch negative Zahlen.
+positiven, sondern auch aus negativen Zahlen. Ebenfalls könnte man diese Zahlenreihe bis in die Unendlichkeit fortsetzen, %ich mag diese Formulierung nicht
+jedoch in diesem Fall in die negative so wie auch in die positive Richtung. Auch hier gibt es wieder eine weitere Untergruppe %eine Untergruppe ist eine spezielle mathematische Struktur, und das wuerd in dem Fall sogar stimmen, aber das muesstest definieren. Das richtige Wort hier ist Untermenge
+:\
 \begin{itemize}
 \item $\mathbb{Z}^*$ - sind alle ganzen Zahlen ohne der Zahl 0
 \end{itemize}
 
-\textbf{Rationale Zahlen} - $\mathbb{Q}$ - \{-7/5, -2/4, 1/2, 2/4, 0,75, ..., n/n\}. Dies sind jene Zahlen, welche sich durch einen Bruch darstellen lassen und deren Zähler und Nenner ganze Zahlen sind. Auch 0,758 lässt sich als Bruch darstellen $\rightarrow{0,758 = 758/1000}$. Diese Zahlen können positiv als aus negativ sein und können unter anderem eine unendliche Anzahl an Nachkommastellen aufweisen.
+\textbf{Rationale Zahlen} - %$\mathbb{Q}$ - \{-7/5, -2/4, 1/2, 2/4, 0,75, ..., n/n\}. 
+%n/n ist eins.
+$\mathbb{Q} = \{\frac{m}{n} | m \in \mathbb{Z}, n \in \mathbb{N}^*\}$
+Dies sind jene Zahlen, welche sich durch einen Bruch darstellen lassen und deren Zähler und Nenner ganze Zahlen sind. %Problem bei 0/0, beides ganze Zahlen
+Auch 0,758 lässt sich als Bruch darstellen $\rightarrow{0,758 = 758/1000}$. Diese Zahlen können positiv als aus negativ sein und können unter anderem eine unendliche Anzahl an Nachkommastellen aufweisen.
 
-\textbf{Irrationale Zahlen} - $\mathbb{I}$ - Es handelt sich hier um Zahlen, welche nicht mittels eines Buches dargestellt werden können. Zum Beispiel ist die Kreiszahl $\pi$ (Umfang / Durchmesser) 3,141592654… eine irrationale Zahl. Man erkennt, dass diese Art von Zahlen niemals periodisch werden. Ebenso gilt, dass alle Wurzeln natürlicher Zahlen, welche keine natürlichen Zahlen ergeben, ebenfalls irrational sind ($\sqrt{5}$).
+\textbf{Irrationale Zahlen} - $\mathbb{I}$ - Es handelt sich hier um Zahlen, welche nicht mittels eines Buches dargestellt werden können. Zum Beispiel ist die Kreiszahl $\pi$ (Umfang / Durchmesser) 3,141592654… eine irrationale Zahl. Man erkennt, dass diese Art von Zahlen niemals periodisch werden. Ebenso gilt, dass alle Wurzeln natürlicher Zahlen, welche keine natürlichen Zahlen ergeben, ebenfalls irrational sind ($\sqrt{5}$). %andere moegliche Formulierung: natuerliche Zahlen, die keine Quadratzahlen sind. Wurzelziehen hast du nirgendwo definiert btw, du koenntest zB hinschreiben die positive Loesung der Gleichung x^2=n
 
-\textbf{Reelle Zahlen} - $\mathbb{R}$. Diese setzen sich aus den rationalen und den irrationalen Zahlen zusammen. Sprich, $\mathbb{R}$ sind alle Zahlen (vgl. \cite[7--9]{Engel2017}).
-
-\subsubsection{Zusammengesetzte Zahlen}
-Um ein noch besseres Bild der Primzahlen verschaffen zu können ist es essentiell zu verstehen was der Begriff \textbf{"{zusammengesetzte Zahlen}"} bedeutet. Diese Zahlen bestehen aus mindestens 2 natürliche Zahlen. Wie genau dies aussieht wird, im späteren Verlauf dieser Arbeit, durch die Primfaktorzerlegung dargestellt und vermittelt ein gutes Bild wie Zahlen zusammengesetzt werden können. Definitionsgemäß werden diese Zahlen folgender Maßen beschrieben:\\
-\hspace*{10mm}\textbf{Sofern eine Zahl $n > 1$ existiert, welche keine Primzahl ist, bezeichnet man diese als zusammengesetzte Zahl}. (vgl. \cite[13]{RempeGillen2009}).\\
+\textbf{Reelle Zahlen} - $\mathbb{R}$. Diese setzen sich aus den rationalen und den irrationalen Zahlen zusammen. Sprich, $\mathbb{R}$ sind alle Zahlen \autocite{vgl. Engel 2017: 7-9}. %NEIN. Es gibt zB Komplexe Zahlen.
 
 Es gibt noch weitere Zahlen wie die imaginären Zahlen oder die komplexen Zahlen. Diese sind für die Arbeit nicht relevant und werden daher nicht näher ausgeführt.
+
+\subsubsection{Zusammengesetzte Zahlen}
+Um ein noch besseres Bild der Primzahlen verschaffen zu können ist es essentiell zu verstehen was der Begriff \textbf{"{zusammengesetzte Zahlen}"} bedeutet. Diese Zahlen lassen sich aus 2 natuerlichen Zahlen multiplikativ kombinieren. Wie genau dies aussieht, wird im späteren Verlauf dieser Arbeit, durch die Primfaktorzerlegung dargestellt und vermittelt ein gutes Bild wie Zahlen zusammengesetzt werden können. Definitionsgemäß werden diese Zahlen folgender Maßen beschrieben:\\
+\hspace*{10mm}\textbf{Sofern eine Zahl $n > 1$ existiert, welche keine Primzahl ist, bezeichnet man diese als zusammengesetzte Zahl}. (vgl. Rempe \& Waldecker 2009: 13).\\
 
 \subsection{Teilbarkeit und Vielfaches}
 Um uns dieser Thematik widmen zu können müssen wir ein paar wenige Parameter im Vorfeld definieren.\newline
 Wir benötigen hierfür die Variablen $k$, $n$, und $m$ und definieren wie folgt:\newline
-Es seien $n$ und $k \in \mathbb{Z}$. Wir beschreiben $k$ als einen \textbf{Teiler} von $n$, und die Variable $n$ als ein \textbf{Vielfaches} von $k$. Folglich entsteht aus dem Ergebnis von $n$ und $k$ eine ganze Zahl. Diese Zahl bezeichnen wir als $m$. Somit ergibt $k\cdot{m} = n$. Ein solches wird dann als $k \mid n$ beschrieben.\newline
-Als Beispiel können wir hier $4 \mid 8$ anführen, denn $4 \cdot 2 = 8$. Umgekehrt können wir festhalten, dass $5 \cdot 2 \neq 8$. Wir schreiben in einem solchen Fall $5 \nmid 8$.\newline
+Es seien $n$, $m$ und $k \in \mathbb{Z}$. Wir beschreiben $k$ als einen \textbf{Teiler} von $n$, und die Variable $n$ als ein \textbf{Vielfaches} von $k$, wenn es eine ganze Zahl $m$ gibt, sodass die Multiplikation von $m$ und $k$ eine ganze Zahl ergibt. Wir schreiben $k\cdot{m} = n$. Diese Relation wird dann als $k \mid n$ beschrieben.\newline
+Als Beispiel können wir hier $4 \mid 8$ anführen, denn $4 \cdot 2 = 8$. Umgekehrt können wir festhalten, dass $5 \cdot 2 \neq 8$. 
+Wir schreiben in einem solchen Fall $5 \nmid 8$.\newline
 Sofern $k \in \mathbb{Z}$ ist, dann besitzt dieser Therm auf jeden Fall 1, -1, $k$ und $-k$ als Teiler. Demnach ist hier sehr gut zu erkennen, dass jede ganze Zahl mindestens 4 Teiler hat
 \begin{center}
 $k = k \cdot 1 = 1 \cdot k$\\
@@ -166,20 +181,19 @@ $n + m = k \cdot x + k \cdot y = k \cdot (n + m)$\\
 $n - m = k \cdot x - k \cdot y = k \cdot (n - m)$\\
 $n \cdot m = (kx) \cdot (ky) = k \cdot (x \cdot k \cdot y)$.
 \end{center}
-Da nun $n + m$, $n - m$ und $x \cdot k \cdot y$ ganze Zahlen sind, ist $k$ nach der Teilbarkeitsregel ein Teiler von $n + m$, $n - m$ und $n \cdot m$ (vgl. \cite[13--15]{RempeGillen2009}).
-\paragraph{Definition - Größter gemeinsamer Teiler - ggT:}
+Da nun $n + m$, $n - m$ und $x \cdot k \cdot y$ ganze Zahlen sind, ist $k$ nach der Teilbarkeitsregel ein Teiler von $n + m$, $n - m$ und $n \cdot m$ (vgl. Rempe \& Waldecker 2009: 13-15).
+\subsubsection{Definition - Größter gemeinsamer Teiler - ggT}
 Den größte gemeinsamen Teiler - ggT für $n$ und $m$ für zwei ganze Zahlen $n, m\in \mathbb{Z}$ nennt man
 \begin{center}
 ggT($n, m$) := max \{$k \mid k$ teilt $n$ und $m\}$.
 \end{center}
-\paragraph{Definition - Kleinste gemeinsame Vielfache - kgV:}
+\subsubsection{Definition - Kleinste gemeinsame Vielfache - kgV}
 Das kleinste gemeinsame Vielfache - kgV für $n$ und $m$ für zwei ganze Zahlen $n, m\in \mathbb{Z}$ nennt man
 \begin{center}
 kgV($n, m$) := min \{$k \mid n$ und $m$ teilen $k\}$.
 \end{center}
-\paragraph{Definition - Teilerfremd:}
+\subsubsection{Definition - Teilerfremd}
 Zwei ganze Zahlen $n, m$ werden als \textbf{teilerfremd} bezeichnet, wenn ggT($n, m$) = 1 ist. Dies bedeutet, dass $n$ und $m$ außer 1 keinen weiteren positiven gemeinsamen Teiler besitzen.
-\newpage
 
 \subsection{Der Euklidische Algorithmus}
 Wir haben nun einiges über den ggT in Erfahrung bringen können und ich möchte auch mit der Thematik weiter machen und auf den Euklidischen Algorithmus näher eingehen. Dieser beschäftigt sich ebenfalls mit der Findung des ggTs.\newline
@@ -187,13 +201,13 @@ Weiterführend zur Teilbarkeitsregel 1.3.1 besteht ein linearer Zusammenhang des
 \begin{center}
 ggT($x, y$) = $ax + by$.
 \end{center}
-Die in (1.3) angeführte Situation ist für kleinere Zahlen perfekt anwendbar. Auch könnte uns die Primfaktorzerlegung, welche im weiteren Verlauf dieser Arbeit behandelt wird, uns ans Ziel führen den ggT zu finden. Jedoch haben wir bisher nur theoretisch mit variablen gerechnet. Es wird sehr schnell klar, dass die oben angewandte Methode an seine Grenzen stößt sobald es um größere Zahlen geht. Genau hier kommt der Euklidische Algorithmus zum Einsatz. Dieser Algorithmus ist im Werk $EUKLIDS$ Elementen Buch VII Satz 2 zu finden. Er ist mit Sicherheit einer der ältersten Vorgänge der Zahlentheorie und ist bis heute noch als das schnellste Verfahren zur Ermittlung des ggTs bekannt. Er kommt speziell bei großen Zahlen zur Anwendung wo die Primfaktorzerlegung an ihre Grenzen stößt und auch kein ggT mit den in (1.3) angeführten Methoden ermittelt werden kann (vgl. \cite[83--84]{Crandall2005}).\newline
+Die in (1.3) angeführte Situation ist für kleinere Zahlen perfekt anwendbar. Auch könnte uns die Primfaktorzerlegung, welche im weiteren Verlauf dieser Arbeit behandelt wird, uns ans Ziel führen den ggT zu finden. Jedoch haben wir bisher nur theoretisch mit variablen gerechnet. Es wird sehr schnell klar, dass die oben angewandte Methode an seine Grenzen stößt sobald es um größere Zahlen geht. Genau hier kommt der Euklidische Algorithmus zum Einsatz. Dieser Algorithmus ist im Werk $EUKLIDS$ Elementen Buch VII Satz 2 zu finden. Er ist mit Sicherheit einer der ältersten Vorgänge der Zahlentheorie und ist bis heute noch als das schnellste Verfahren zur Ermittlung des ggTs bekannt. Er kommt speziell bei großen Zahlen zur Anwendung wo die Primfaktorzerlegung an ihre Grenzen stößt und auch kein ggT mit den in (1.3) angeführten Methoden ermittelt werden kann (vgl. Crandall \& Pomerance 2005: 83-84).\newline
 Der Grundgedanke ist jener, dass man aus den bereits bekannten Variablen $a$ und $b$ neue Zahlen generiert. Man hat aber darauf zu achten, dass diese dieselben gemeinsamen Teiler haben.
 
 \begin{quote}
 \small
 \textbf{Hilfssatz (Zahlenpaare mit den selben gemeinsamen Teilern).} Es seien $a, b, m \in \mathbb{Z}$ beliebig. Dann ist jeder gemeinsame Teiler von $a$ und $b$ auch ein gemeinsamer Teiler von $a$ und $c := b + m \cdot a$; umgekehrt ist jeder gemeinsame Teiler von $a$ und $c$ ein gemeinsamer Teiler von $a$ und $b$. Insbesondere gilt ggT($a, b$) = ggT($a, b + m \cdot a$).\newline
-\autocite[17]{RempeGillen2009}\newpage
+(Rempe \& Waldecker 2009: 17)\newpage
 \end{quote}
 \textbf{Der Euklidische Algorithmus kann nun wie folgt verstanden werden:}\newline
 Gegeben ist $a, b \in \mathbb{N}$ mit $a \ge b \ge 1$. Weiters bestimmen wir das $a_0 := a$ und $a_1 := b$. Hiermit werden wir Divisionsketten mit Rest bilden.
@@ -229,25 +243,15 @@ xxxxx\=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\=xxxxx\kill
 
 Auf der linken Seite der beiden Beispiele erhält man im Ergebnis als\\
 ggT ($138.777, 16.855$) nach der zehnten Division die Zahl 1. Auf der rechten Seite ist der ggT ($2.250, 765$) die Zahl 45.
-Betrachtet man nun diese Divisionkette von oben nach unten so kann man schlussfolgern, dass für jeden gemeinsamen Teiler $x$ von $a_0$ und $a_1$ hintereinander $x \mid a_0$, $x \mid a_1$, $x \mid a_2$, ..., $x \mid a_k$.\newline
-Daher erfüllt $a_k$ die Definition ein ggT zu sein $\to$ $a_k$ = ggT($a_0,a_1$) = ggT($a, b$) (vgl. \cite[58--59]{Remmert1995}).
+Betrachtet man nun diese Divisionkette von oben nach unten so kann man schlussfolgern, dass für jeden gemeinsamen Teiler $x$ von $a_0$ und $a_1$ hintereinander $x \mid a_0$, $x \mid a_1$, $x \mid a_2$, ..., $x \mid a_k$. Daher erfüllt $a_k$ die Definition ein ggT zu sein $\to$ $a_k$ = ggT($a_0,a_1$) = ggT($a, b$) (vgl. Remmert \& Ullrich 1995: 58-59).
 
 \section{Modulare Arithmetik}
-Ich werde bei den Grundlagen dieser Thematik genauer in die Tiefe gehen, um die Zusammenhänge im späteren Verlauf leichter fassen zu können. Durch gewisse Eigenschaften, welche die modulare Arithmetik mit sich bringt, konnten einige höherrangige Primzahltests entwickelt und implementiert werden. Von besonderen Interesse kann hier der \textit{Kleine Satz von Fermat} genannt werden, welcher im Kapitel \ref{Der Kleine Satz von Fermat} auf S. \pageref{Der Kleine Satz von Fermat} näher beschrieben wird.
+Ich werde bei den Grundlagen dieser Thematik genauer in die Tiefe gehen, um die Zusammenhänge im späteren Verlauf leichter fassen zu können. Durch gewisse Eigenschaften, welche die modulare Arithmetik mit sich bringt, konnten einige höherrangige Primzahltests entwickelt und implementiert werden. Von besonderen Interesse kann hier der \textit{Kleine Satz von Fermat} genannt werden, welcher im Kapitel 4.3 näher beschrieben wird.
 
-Wichtig ist hier im ersten Schritt zu verstehen, dass die modulare Arithmetik eine differenziere Betrachtungsweise der Additions- bzw. Multiplikationsrechnung darstellt. Für eine leichtere Auffassung ist die beste Methode sich eine Uhr und deren Ziffernblatt oder den Tag mit seinen 24 Stunden in einem Kreis vorzustellen.
-
-\begin{figure}[h]
- \centering
- \includegraphics{Uhr}
- \caption{Tageszeiten im Vergleich mit kongruenten Zahlen}
- \label{fig:Tageszeiten im Vergleich mit kongruenten Zahlen}
- \cite[298]{Meinel2011}
-\end{figure}
-
-Möchte man zum Beispiel wissen wie spät es in 55 Stunden sein wird wenn es jetzt 16 Uhr ist, wäre eine klassische Addition von $16+55=\sage{16+55}$ inkorrekt, da ein klassisches Ziffernblatt nur 12 Zahlen und der Tag bekannterweise nur 24 Stunden hat. Wobei in dieser Betrachtung aber gilt $24=0$. Man kann nun das Ergebnis 71 durch 24 Stunden dividieren und enthält $2,958333333$. Weiters wird der Rest $0,958333333$ nochmals mit 24 multipliziert. Somit gelangt man zur korrekten Lösung, dass es in 55 Stunden \textbf{23 Uhr} sein wird.
-
+Wichtig ist hier im ersten Schritt zu verstehen, dass die modulare Arithmetik eine differenziere Betrachtungsweise der Additions- bzw. Multiplikationsrechnung darstellt. Für eine leichtere Auffassung ist die beste Methode sich eine Uhr und deren Ziffernblatt vorzustellen. Möchte man zum Beispiel wissen wie spät es in 55 Stunden sein wird wenn es jetzt 16 Uhr ist, wäre eine klassische Addition von $16+55=sage$ 
+inkorrekt, da ein klassisches Ziffernblatt nur 12 Zahlen und der Tag bekannterweise nur 24 Stunden hat. Wobei in dieser Betrachtung aber gilt $12=0$. Man kann nun das Ergebnis 71 durch 24 Stunden dividieren und enthält $2,958333333$. Weiters wird der Rest $0,958333333$ nochmals mit 24 multipliziert. Somit gelangt man zur korrekten Lösung, dass es in 55 Stunden \textbf{23 Uhr} sein wird.
 Bevor ich dies noch mathematisch darstelle und beweise möchte ich noch grundlegende Bedingungen festlegen:
+
 \begin{itemize}
     \item Es ist bedeutend, dass eine natürliche Zahl $n>1$ beim teilen mit $n$ immer den selben Rest hat.
     \item Weiters bleibt beim teilen durch 2 von ungeraden $\mathbb{Z}$ immer ein Rest von 1.
@@ -261,30 +265,17 @@ Bevor ich dies noch mathematisch darstelle und beweise möchte ich noch grundleg
 Um diese Bedingungen per Definition festzuhalten formulieren wir:\\
 \textbf{Kongruenz:} Für $\mathbb{N}$ gilt $n>1$. $a$ und $b$ sind $\mathbb{Z}$, welche beim Teilen mit $n$ den selben Rest haben. Somit erhalten wir $a\equiv b$ (mod $n$). Sprich: \textbf{$a$ ist kongruent zu $b$ modulo $n$}. Die Differenz dieser Zahlen ist ein Vielfaches von $n$, wenn $a-b$ ein Vielfaches von $n$ ist.
 
-Anhand der soeben definierten Bedingung stellt sich nun die Frage ob die Differenz von $a$ und $b$ durch $n$ teilbar ist? Hierzu gilt allgemein, dass es für das modulare Rechnen gewisse Regeln gibt, welche unbedingt einzuhalten sind:
-\begin{itemize}
-    \item Gegeben sei: $n>1$ und $a, b, c,$ und $d$ beliebige $\mathbb{Z}$.
-    \item Wenn $a\equiv b$ (mod $n$) und $a\equiv c$ (mod $n$), dann muss auch $b\equiv c$ (mod $n$) sein.
-    \item Ist $a\equiv b$ (mod $n$) und $c\equiv d$ (mod $n$), dann sind auch $a + c\equiv b + d$ (mod $n$), $a - c\equiv b - d$ (mod $n$) und $a \cdot c\equiv b \cdot d$ (mod $n$).
-    \item Zu guter Letzt gilt auch: Wenn $a\equiv b$ (mod $n$), so ist auch $a^k\equiv b^k$ (mod $n$) für alle $k$ $\in$ $\mathbb{N}$
-\end{itemize} (vgl. \cite[66]{RempeGillen2009}).
-
-Kongruent bedeutet umgangssprachlich: Innerhalb des vorgegebenen Systems in dem ich mich bewege und rechne sind es eigentlich immer die selben Zahlen. Verwende ich statt $\equiv$ ein = erhalte ich im Grunde das selbe Ergebnis. Dies ist anhand der Abbildung \ref{fig:Tageszeiten im Vergleich mit kongruenten Zahlen} sehr gut ersichtlich. Hier wäre das $n$ in (mod $n$) zum Beispiel die Zahl 24, wobei wir uns in jener Menge von $\mathbb{Z}_{24}$ = $\{0, 1, 2, ..., 22, 23\}$ bewegen. Sollten wir nun als Ergebnis die Zahl 44 erhalten, wäre dies keine Zahl in unserem Zahlensystem. Aber man erkennt in Abbildung \ref{fig:Tageszeiten im Vergleich mit kongruenten Zahlen} sehr gut, dass die Zahl 44 gleichbedeutend mit der Zahl 20 ist. Wenn wir uns das einführende Beispiel dieses Kapitels mit der Zahl 23 ansehen heißt dies, dass diese Zahl gleichbedeutend mit der Zahl 71 ist. Dies stimmt auch mit unserem Ergebnis überein. Weiters zählt die Zahl 23 aber auch für die Zahlen 47, -1 und -25. Egal ob positiv oder negativ, die Spirale könnte bis ins unendliche weitergeführt werden (vgl. \cite[298--299]{Meinel2011}).
-
-Um dies zu beweisen werde ich ein weiters Bespiel heranziehen:
-
-
 
 \section{Primzahlen}
 \subsection{Die Anfänge der Primzahlen}
-Die Materie der Primzahlen ist ein sehr komplexes und bis heute noch immer nicht ganz verständliches Zahlensystem. Es ist zwar bekannt, dass es Primzahlen gibt, aber man glaubt, dass es unendlich viele Primzahlen geben muss. Äußerst erstaunlich ist hingegen die frühe Entdeckung über die Existenz der Primzahlen. Noch vor Christi Geburt wurden diese Sonderlinge von einem gewissen Herrn \textit{Euklid} oder \textit{Euklides} entdeckt (\cite[22]{Remmert1995}). Dieser Mann war ein griechischer Gelehrter und der berühmteste Mathematiker der Antike. Er wurde etwa 60 Jahre alt und starb circa 265 v. Chr. in Alexandria, Ägypten. Sein Werk "Die Elemente"\ beeinflusste zwei Jahrtausende die Welt der Mathematiker und ist neben der Bibel als das weit verbreitetste Werk der Weltliteratur bekannt. Obwohl er für so lange Zeit der Welt der Mathematik prägte ist sehr wenig über sein Leben und seine Herkunft bekannt. Schriften zufolge soll er die platonische Akademie in Athen besucht haben. Über die Zeit haben sich drei unterschiedliche Theorien über sein Leben entwickelt. Es stellen sich die Fragen ob Euklides\
+Die Materie der Primzahlen ist ein sehr komplexes und bis heute noch immer nicht ganz verständliches Zahlensystem. Es ist zwar bekannt, dass es Primzahlen gibt, aber man glaubt, dass es unendlich viele Primzahlen geben muss. Äußerst erstaunlich ist hingegen die frühe Entdeckung über die Existenz der Primzahlen. Noch vor Christi Geburt wurden diese Sonderlinge von einem gewissen Herrn \textit{Euklid} oder \textit{Euklides} entdeckt (Remmert und Ullrich 1995: 22). Dieser Mann war ein griechischer Gelehrter und der berühmteste Mathematiker der Antike. Er wurde etwa 60 Jahre alt und starb circa 265 v. Chr. in Alexandria, Ägypten. Sein Werk "Die Elemente"\ beeinflusste zwei Jahrtausende die Welt der Mathematiker und ist neben der Bibel als das weit verbreitetste Werk der Weltliteratur bekannt. Obwohl er für so lange Zeit der Welt der Mathematik prägte ist sehr wenig über sein Leben und seine Herkunft bekannt. Schriften zufolge soll er die platonische Akademie in Athen besucht haben. Über die Zeit haben sich drei unterschiedliche Theorien über sein Leben entwickelt. Es stellen sich die Fragen ob Euklides\
 \begin{itemize}
 \item tatsächlich eine historische Person ist und er seine Werke selbst verfasst hat, oder
 \item der Kopf einer Gruppe gewesen sei, welche in seinem Namen die Errungenschaften und Erkenntnisse veröffentlichten, selbst nach seinem Tod, oder
 \item er überhaupt gelebt hat? Spezialisten glauben, dass damalige Mathematiker den Namen eines Herrn \textit{Euklid von Megara} verwendeten und deren Werke unter dessen Namen veröffentlichten. Dieser Mann lebte aber etwa 100 Jahre vor der Geburt Euklides.
 \end{itemize}
 Welche dieser Theorien nun stimmt kann ich nicht beurteilen ist auch nicht Bestandteil dieser Arbeit. Fakt ist jedoch, dass diese Werke maßgebend sind und über 2000 Jahre deren Richtigkeit nicht angezweifelt wurden. Das Werk  "Die Elemente"\ besteht aus 13 Büchern. Unter anderem handelt das siebente Buch von der Zahlentheorie und beinhaltet den \textit{Euklidischen Algorithmus}, welche zur Bestimmung des größten gemeinsamen Teilers (ggT) zweier Zahlen dient (Biografie von Euklid).\\
-Genau hier möchte ich einen sanften Übergang in die Zahlentheorie einleiten. Diese beschäftigt sich mit den Eigenschaften von ganzen Zahlen und zerlegt unter anderem eine Zahl in Primfaktoren. Es ist derzeit immer noch ein Problem Primzahlen überhaupt zu erkennen. In dieser Disziplin der Mathematik gibt es eine Vielzahl an Problemen, welche sich leicht formulieren lassen. Diese aber zu lösen stellt sich bis heute noch als außerordentlich schwierig dar (vgl. \cite[13]{Pomerance1996}).
+Genau hier möchte ich einen sanften Übergang in die Zahlentheorie einleiten. Diese beschäftigt sich mit den Eigenschaften von ganzen Zahlen und zerlegt unter anderem eine Zahl in Primfaktoren. Es ist derzeit immer noch ein Problem Primzahlen überhaupt zu erkennen. In dieser Disziplin der Mathematik gibt es eine Vielzahl an Problemen, welche sich leicht formulieren lassen. Diese aber zu lösen stellt sich bis heute noch als außerordentlich schwierig dar (vgl. Pomerance 1983: 136).
 
 \subsection{Primzahlen per Definition}
 \textbf{Primzahlen} - $\mathbb{P}$ - \{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, ..., pn\}.\\
@@ -319,49 +310,32 @@ Anmerkung: Die größte im Januar 2017 bekannte Primzahl hat 22.338.618 Stellen 
 \item [o]Zyklische-Primzahlen
 \item [p]Permutierbare-Primzahlen
 \end{itemize}
-Wie oben zu erkennen ist gibt es unterschiedlichste Formen von Primzahlen und alle werden unterschiedlich berechnet. Genauso gibt es zu jeder Primzahl auch verschiedene Testungen um festzustellen ob das Ergebnis tatsächlich eine Primzahl darstellt (vgl. \cite[86--90]{Engel2017}).
+Wie oben zu erkennen ist gibt es unterschiedlichste Formen von Primzahlen und alle werden unterschiedlich berechnet. Genauso gibt es zu jeder Primzahl auch verschiedene Testungen um festzustellen ob das Ergebnis tatsächlich eine Primzahl darstellt (vgl. Engel 2017: 86-90).
 
 \subsection{Das Sieben von Zahlen}
 Das Sieben von Zahlen kann eine sehr effektive Funktion für einige Berechnungen sein. Z.B. kann mit dem Sieben heraus gefunden werden ob eine Zahl eine Primzahl ist oder auch für die Faktorisierung verwendet werden. Ich gehe hier näher auf das \textbf{Sieb des Eratosthenes} ein. Dieses sticht mit seiner Einfachheit heraus. Selbst ein Kind, welches ein gewisses Maß an mathematischen Wissen besitzt kann diesen Test sehr leicht durchführen. Er wurde im 3. Jahrhundert v. Chr. mit dem Grundgedanken entwickelt um für eine gewisse Bandbreite an Zahlen alle Primzahlen heraus zu filtern. Anhand des folgenden Beispiels werde ich dies näher erörtern:\\
 Für die unten stehenden Zahlen 1 bis $N$ ($1-151$) in der Tabelle möchte ich nun alle enthaltenen Primzahlen herausfinden. Wie schon anfangs des Kapitels erwähnt wird die Zahl 1 nicht als Primzahl gewertet und daher wird diese in der Tabelle weggelassen und die Zahlenfolge beginnt mit der Zahl 2. Um die Arbeit weiter zu erleichtern werden alle ungeraden und geraden Zahlen untereinander aufgeschrieben.\\
 
-\begin{table}\begin{center}
-\begin{tabular}[h]{c|c|c|c|c|c|c|c|c|c}
+\begin{center}\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
    & 2 & 3 & \st{ 4 } & 5 & \st{ 6 } & 7 & \st{ 8 } & \st{ 9 } & \st{ 10 } \\
-\hline
 11 & \st{ 12 } & 13 & \st{ 14 } & \st{ 15 } & \st{ 16 } & 17 & \st{ 18 } & 19 & \st{ 20 } \\
-\hline
 \st{ 21 } & \st{ 22 } & 23 & \st{ 24 } & \st{ 25 } & \st{ 26 } & \st{ 27 } & \st{ 28 } & 29 & \st{ 30 } \\
-\hline
 31 & \st{ 32 } & \st{ 33 } & \st{ 34 } & \st{ 35 } & \st{ 36 } & 37 & \st{ 38 } & \st{ 39 } & \st{ 40 } \\
-\hline
 41 & \st{ 42 } & 43 & \st{ 44 } & \st{ 45 } & \st{ 46 } & 47 & \st{ 48 } & \st{ 49 } & \st{ 50 } \\
-\hline
 \st{ 51 } & \st{ 52 } & 53 & \st{ 54 } & \st{ 55 } & \st{ 56 } & \st{ 57 } & \st{ 58 } & 59 & \st{ 60 } \\
-\hline
 61 & \st{ 62 } & \st{ 63 } & \st{ 64 } & \st{ 65 } & \st{ 66 } & 67 & \st{ 68 } & \st{ 69 } & \st{ 70 } \\
-\hline
 71 & \st{ 72 } & 73 & \st{ 74 } & \st{ 75 } & \st{ 76 } & \st{ 77 } & \st{ 78 } & 79 & \st{ 80 } \\
-\hline
 \st{ 81 } & \st{ 82 } & 83 & \st{ 84 } & \st{ 85 } & \st{ 86 } & \st{ 87 } & \st{ 88 } & 89 & \st{ 90 } \\
-\hline
 \st{ 91 } & \st{ 92 } & \st{ 93 } & \st{ 94 } & \st{ 95 } & \st{ 96 } & 97 & \st{ 98 } & \st{ 99 } & \st{ 100 } \\
-\hline
 101 & \st{ 102 } & 103 & \st{ 104 } & \st{ 105 } & \st{ 106 } & 107 & \st{ 108 } & 109 & \st{ 110 } \\
-\hline
 \st{ 111 } & \st{ 112 } & 113 & \st{ 114 } & \st{ 115 } & \st{ 116 } & \st{ 117 } & \st{ 118 } & \st{ 119 } & \st{ 120 } \\
-\hline
 \st{ 121 } & \st{ 122 } & \st{ 123 } & \st{ 124 } & \st{ 125 } & \st{ 126 } & 127 & \st{ 128 } & \st{ 129 } & \st{ 130 } \\
-\hline
 131 & \st{ 132 } & \st{ 133 } & \st{ 134 } & \st{ 135 } & \st{ 136 } & 137 & \st{ 138 } & 139 & \st{ 140 } \\
-\hline
 \st{ 141 } & \st{ 142 } & \st{ 143 } & \st{ 144 } & \st{ 145 } & \st{ 146 } & \st{ 147 } & \st{ 148 } & 149 & \st{ 150 } \\
-\hline
 151 & & & & & & & & & \\
+\hline
 \end{tabular}\end{center}
-\caption{Sieb des Eratosthenes}
-\label{tab:Sieb des Eratosthenes}
-\end{table}
 
 Nun gehen wir wie folgt vor:
 \begin{enumerate}
@@ -372,9 +346,9 @@ Nun gehen wir wie folgt vor:
 \end{enumerate}
 Mit dem Sieb des Eratosthenes werden in diesem Beispiel alle Vielfache von $2, 3, 5, ... < \sqrt{151}$ ausgesiebt bis wir bei $\lceil151\rceil$ angelangt sind. Der Vorteil liegt darin, dass bereits gestrichene Zahlen nicht weiter berücksichtigt werden müssen, da diese durch einen echten Teiler teilbar und somit nicht prim sind. Nicht gestrichene Zahlen welche zwischen 1 und 151 liegen sind somit Primzahlen. Unter Berücksichtigung von einigen Optimierungen, auf welche ich hier nicht eingehe, kann dieser Sieb mathematisch wie folgt dargestellt werden:
 \[\sum_{p\le N} \frac{N}p = N ln ln N + O(N)\]
-(vgl. \cite[121]{Crandall2005}).
+(vgl. Crandall \& Pomerance 2005: 121)
 
-Um dieses Beispiel abzuschließen ergibt sich durch das Sieb folgende Reihe an Primzahlen $\mathbb{P}$: $\sage{prime_range(152)}$.\\
+Um dieses Beispiel abzuschließen ergibt sich durch das Sieb folgende Reihe an Primzahlen $\mathbb{P}$: %$\sage{prime_range(152)}$.\\
 Für kleine Zahlen ist dieses Siebverfahren durchaus geeignet, doch auch hier lässt sich erkennen, dass es für große Zahlen nicht praktikabel ist.
 
 Es gibt natürlich weitere Primzahltestungen:
@@ -386,7 +360,7 @@ Es gibt natürlich weitere Primzahltestungen:
     \item Eine substanzielle Modifizierung vom kleinen fermatschen Satz ist der \textit{APRCL-Test}. Dieser wurde 1980 von 5 Mathematikern ent- und weiterentwickelt.
 \end{itemize}
 
-\subsection{Der Kleine Satz von Fermat}\label{Der Kleine Satz von Fermat}
+\subsection{Der Kleine Satz von Fermat}
 
 
 Um die Existenz von unendlich vielen Primzahlen zu beweisen wurden unterschiedliche Theorien und mathematische Formeln aufgestellt. Der womöglich wichtigste Beweis “Beweis von Euklid” wird in dieser Arbeit angeführt. Es gibt noch mehrere Beweise doch können diese hier nicht alle besprochen werden und würde den Rahmen sprengen.
@@ -409,7 +383,7 @@ Weitere Beispiele der Faktorisierung aus der jüngeren Zeit:\
 \begin{center}
 $M_{113} = 2^{113}-1 = 3.391\times23.279\times65.993\times1.868.569\times1.066.818.132.868.207$ $\rightarrow$ 1856 von Reuschle den kleinsten Faktor \& 1947 die restlichen Fakroten von Lehmer;\\
 $M_{193} = 2^{193}-1 = 13.821.503\times61.654.440.233.248.340.616.559\times14.732.265.321.145.317.331.353.282.383$ $\rightarrow$ 1983 von Naur;\\
-$M_{257} = 2^{257}-1 = 535.006.138.814.359\times1.155.685.395.246.619.182.673.033\times374.550.598.501.810.936.581.776.630.096.313.181.393$ $\rightarrow$ 1979 von Penk den ersten Faktor \& 1980 von Baille, der die anderen beiden Faktoren fand\end{center} (vgl. \cite[125--128]{Ribenboim2006}).
+$M_{257} = 2^{257}-1 = 535.006.138.814.359\times1.155.685.395.246.619.182.673.033\times374.550.598.501.810.936.581.776.630.096.313.181.393$ $\rightarrow$ 1979 von Penk den ersten Faktor \& 1980 von Baille, der die anderen beiden Faktoren fand\end{center} (vgl. Ribenboim: 2006).
 
 \subsubsection{Beweis von Euklid}
 Als einfachster Beweis kann hier der Beweis von Euklid genannt werden. Gehen wir davon aus, dass wir den Fakt der bis heute herrschenden Auffassung “Es gibt unendlich viele Primzahlen” widerlegen möchten. Demnach formulieren wir hierzu zwei widersprüchliche Aussagen:\\\\
@@ -431,13 +405,13 @@ Zur Auflösung dieser Zahlenreihe gibt es zwei mögliche Ergebnisse:
 \end{itemize}
 \textbf{Zu 1.:} Sollte $x$ tatsächlich eine Primzahl sein, dann wäre hiermit schon bewiesen, dass die Aussage N nicht stimmen kann. Da am Ende der Zahlenreihe $p_r$ + 1 gerechnet wird, muss $x$ > $p_r$ sein.\\\\
 \textbf{Zu 2.:} Sehen wir uns nochmals den oben beschriebenen Fundamentalsatz der Arithmetik und deren Primfaktorzerlegung an. Dieser Satz besagt, dass sich jede Zahl als Produkt von Primzahlen darstellen lässt. Da sich $x$ durch die Addition von 1 nicht durch eine bekannte Primzahl aus der Zahlenreihe teilen lässt muss es doch im Umkehrschluss eine Primzahl geben, welche größer als $p_r$ ist, um $x$ teilbar zu machen. Auch hier gilt wiederum N als widerlegt.\\
-\\Da nun N als die falsche Aussage identifiziert wurde kann nur P mit der Aussage, dass es eine unendliche Anzahl von Primzahl gibt, Gültigkeit haben (vgl. \cite[3]{Ribenboim2006}).\\
+\\Da nun N als die falsche Aussage identifiziert wurde kann nur P mit der Aussage, dass es eine unendliche Anzahl von Primzahl gibt, Gültigkeit haben (vgl. Ribenboim 2006: 3).\\
 \\Dieser Beweis von Euklid ist an sich einer der einfachsten, doch aufgrund des Nichtwissens wie die neue Primzahl $p_r$ beschaffen ist, welche in jedem Schritt erzeugt wird, wirft dieser Beweis weitere Fragen auf. Zum einen lässt sich nur erkennen, dass die neue Primzahl $p_r$ in ihrer Größe höchstens gleich
 \\*$x$ = $p_1p_2...p_n$ + 1 ist. Jedoch kann es durchaus sein, dass die Zahl $x$ für manche Indizes $n$ selbst eine Primzahl und für andere $n$ aber teilbar ist.\\
 \\Im Buch “Die Welt der Primzahlen” von Paulo Ribenboim findet sich wohl die kürzeste Version von Euklids Beweis und unterstreicht dessen Richtigkeit von der Anzahl unendlicher Primzahlen:\\
 \begin{quote}
 \small
-\textbf{Beweis von Kummer.} Angenommen, es gäbe nur endlich viele Primzahlen $p_1 < p_2 <...< p_r$. Es sei $N = p_1p_2...p_r$, wobei N > 2. Die Zahl N - 1, die wie alle natürlichen Zahlen ein Produkt von Primzahlen ist, muss mit N einen gemeinsamen Teiler $p_i$ haben, der dann wiederum die Differenz N - (N - 1) = 1 teilen müsste, was nicht sein kann. (\cite[4]{Ribenboim2006})
+\textbf{Beweis von Kummer.} Angenommen, es gäbe nur endlich viele Primzahlen $p_1 < p_2 <...< p_r$. Es sei $N = p_1p_2...p_r$, wobei N > 2. Die Zahl N - 1, die wie alle natürlichen Zahlen ein Produkt von Primzahlen ist, muss mit N einen gemeinsamen Teiler $p_i$ haben, der dann wiederum die Differenz N - (N - 1) = 1 teilen müsste, was nicht sein kann. (Ribenboim 2006: 4)
 \end{quote}
 
 \subsubsection{Bézout's Lemma}
@@ -459,7 +433,7 @@ $28 = 1+2+4+7+14$
 \paragraph{Definition (Satz von Euklides):}Sofern n $\in$ $\mathbb{N}$ ist, dann ist $2^{n}-1$ prim.Weiters ist $2^{n}-1$($2^{n}-1$) eine vollkommene Zahl.\\
 \\Diese Definition ist sogar eine Formulierung von vollkommen geraden Zahlen und war lange Zeit unbewiesen. Der dafür notwendige Beweis kam später durch "{Euler}". Da man aufgrund dieser Beweise erkennen kann, dass die Kombination von Marsenne-Zahlen und vollkommenen Zahlen in der Zahlentheorie einen wichtigen Beitrag leisten, können Mersenne-Primzahlen weiter definiert werden:
 \paragraph{Definition (Mersenne-Primzahl):}Von einer Mersenne-Primzahl spricht man, wenn die Mersenne-Zahl selbst prim ist.\\
-\\Erklärungsgemäß bedeutet dies, dass eine Mersenne-Primzahl nur dann als solches gilt wenn $n$ ebenfalls eine Primzahl ist. Z.B. ist $M_5 = 2^{5}-1 = 31$ eine Mersenne-Primzahl, da $n$, dargestellt als hochgestellte (5), selbst prim ist. Auf den ersten Blick mag es den Anschein haben, dass für eine zusammengesetzte Zahl $n$ auch die Mersenne-Zahl $M_n$ zusammengesetzt sein muss. Dies kann jedoch verneint und kann nicht als Charaktermerkmal angeführt werden. Als Beispiel dient hier $M_{11} = 2^{11}-1 = 2047$. Da $23 \times 89$ die Zahl $2047$ ergibt, und somit mehr als zwei Teiler besitzt und gegen die Definition der Primzahlen verstößt, kann nicht von einer Primzahlen gesprochen werden. Vielmehr wird sie aber als eine zusammengesetzte Zahl bezeichnet (vgl. \cite[168--169]{RempeGillen2009}).\\
+\\Erklärungsgemäß bedeutet dies, dass eine Mersenne-Primzahl nur dann als solches gilt wenn $n$ ebenfalls eine Primzahl ist. Z.B. ist $M_5 = 2^{5}-1 = 31$ eine Mersenne-Primzahl, da $n$, dargestellt als hochgestellte (5), selbst prim ist. Auf den ersten Blick mag es den Anschein haben, dass für eine zusammengesetzte Zahl $n$ auch die Mersenne-Zahl $M_n$ zusammengesetzt sein muss. Dies kann jedoch verneint und kann nicht als Charaktermerkmal angeführt werden. Als Beispiel dient hier $M_{11} = 2^{11}-1 = 2047$. Da $23 \times 89$ die Zahl $2047$ ergibt, und somit mehr als zwei Teiler besitzt und gegen die Definition der Primzahlen verstößt, kann nicht von einer Primzahlen gesprochen werden. Vielmehr wird sie aber als eine zusammengesetzte Zahl bezeichnet (vgl. Rempe \& Waldecker 2009: 168-169).\\
 Für interessierte Leser kann hier weiterführend der Lucas-Test erwähnt werden. Dieser Test dient als Beweis und liefert Antworten zum oben angeführten Problem der Primzahlen in Kombination mit zusammengesetzten Zahlen. Die Definition wird wie folgt ohne weitere Erörterung angeführt.
 \paragraph{Definition (Lucas-Test):}Wir definieren eine Folge $k_0,k_1,...$ von natürlichen Zahlen rekursiv durch $k_0$ := 4 und $k_{i+1}$ := $k_i^2-2$ für alle $i\geq 0$.
 \newline Sei nun $n\geq 3$ prim. Genau dann ist $M_n$ eine Mersenne-Primzahl, wenn $M_n$ ein Teiler ist von $k_{n-2}$. \textbf{Hier muss ich noch ein wenig mehr recherchieren, weil ich mir vorstellen kann, dass das nicht wirklich die Definition vom Lucas-Test ist!!!}\\
@@ -469,9 +443,6 @@ Für interessierte Leser kann hier weiterführend der Lucas-Test erwähnt werden
 \hspace*{15mm}keine gegenteilige Argumentationen gibt.\\
 \\Gibt es unendlich viele zerlegbare Mersenne-Primzahlen?\\
 \\Ist jede Mersenne-Primzahl quadratfrei?\\
-
-Liste aller Mersennen-Primzahlen, welche bisher entdeckt wurden:\\\\\\\\\\
-
 
 
 
@@ -496,13 +467,13 @@ Bei der \textbf{Polybius-Tafel}, zirka 190 v. Chr., wurden zum ersten Mal Buchst
 Die \textbf{Caesar-Chiffre} wird vermutlich eines der bekanntesten Methoden zur Verschlüsselung sein. Bei dieser Verschlüsselung handelt es sich um eine “monoalphabetische”. Bei dieser Art der Kodierung werden die Buchstaben des Alphabets vertauscht und es entsteht als Endprodukt ein sogenanntes Schlüsselalphabet, welches zur Entschlüsselung von Nachricht unbedingt benötigt wird. Bei der Caesar-Chiffre wurden die Buchstaben des Alphabets einfach um drei Stellen nach rechts verschoben.\\
 Man kann sich durchaus leicht vorstellen, dass diese Arten der Verschlüsselung auf Dauer recht unsichere Methoden waren. Sobald man als nicht einbezogene Partei einmal die Grundidee dahinter verstanden hat ist die Dekodierung ein leichtes. Bei den ersten zwei Beispielen müsste man die Nachrichten einfach nur um mehrere Holzstäbe unterschiedlichen Durchmessers wickeln bis man die Nachricht lesen kann. Selbst bei der Anwendung des Schlüsselalphabets ist es irrelevant nach links zu verschieben und, oder die Anzahl der Stellen zu ändern. Das Prinzip bleibt im Grunde gleich.\\
 
-\textbf{ENIGMA}, die damals ausgeklügelste Methode in Form einer Verschlüsselungsmaschine, ist ein weiteres sehr bekanntes Verschlüsselungssystem und wurde von den Deutschen im 2. Weltkrieg eingesetzt. Es wurde eine sogenannte “polyalphabetische” Verschlüsselung verwendet. Bei dieser Art der Verschlüsselung wird nicht nur ein Schlüsselalphabet, wie bei der Caesar-Chiffre, sondern mehrere Alphabete werden kombiniert, zwischen denen immer wieder gewechselt wird. ENIGMA hat automatisch zwischen mehr als 100.000 unterschiedlichen Alphabeten gewechselt. Dieses Gerät wurde erfolgreich über mehrere Jahre angewandt, bis auch diese Methode von einem englischen Mathematiker schlussendlich geknackt wurde (vgl. \cite[103--105]{RempeGillen2009}).
+\textbf{ENIGMA}, die damals ausgeklügelste Methode in Form einer Verschlüsselungsmaschine, ist ein weiteres sehr bekanntes Verschlüsselungssystem und wurde von den Deutschen im 2. Weltkrieg eingesetzt. Es wurde eine sogenannte “polyalphabetische” Verschlüsselung verwendet. Bei dieser Art der Verschlüsselung wird nicht nur ein Schlüsselalphabet, wie bei der Caesar-Chiffre, sondern mehrere Alphabete werden kombiniert, zwischen denen immer wieder gewechselt wird. ENIGMA hat automatisch zwischen mehr als 100.000 unterschiedlichen Alphabeten gewechselt. Dieses Gerät wurde erfolgreich über mehrere Jahre angewandt, bis auch diese Methode von einem englischen Mathematiker schlussendlich geknackt wurde (Rempe und Waldecker 2009: 103-105).
 
 \subsection{Kryptographie von Heute}
 Durch die geschichtliche Zusammenfassung im vorherigen Abschnitt wurde ein grober aber guter Überblick verschafft wofür die Kryptographie dient. Jedoch möchte ich zusätzlich vermerken, dass sich die Kryptographie generell mit der Entwicklung, Erforschung und Verbesserung von Verschlüsselungsmethoden befasst. Das dahinter steckende Ziel ist es Nachrichten so einfach und schnell wie möglich zu verschlüsseln und für Außenstehende unkenntlich und unbrauchbar zu machen. Als Gegenspieler der Kryptographie wird die Kryptoanalyse bezeichnet. Hier wird versucht die kodierte Nachricht ohne dem Wissen des passenden Schlüssels zu dekodieren und die verwendeten Verschlüsselungssysteme herauszufinden.\\
 
 Bei den oben angeführten Beispielen im Abschnitt 4.1 erkennt man jedoch, dass alle Systeme durch damalige Kryptoanalytiker bezwungen und der Schlüssel herausgefunden wurde. Wo lag also der Fehler bei den unterschiedlichen Verschlüsselungsformen? Alle der vier genannten Beispiele haben denselben Nachteil, sie sind symmetrische Verschlüsselungssysteme. Das bedeutet in diesem Zusammenhang, dass der Schlüssel zum senden und empfangen der Nachricht ident war. Sobald man also den Verschlüsselungsalgorithmus verstanden und den Schlüssel hatte wurde das verwendete Kryptosystem gegenstandslos. Genau dieser Aspekt ist ein großes Sicherheitsrisiko. Um diese Schwachstelle zu umgehen wurde 1975 die sogenannte \textbf{Public-Key-Verschlüsselung} ins Leben gerufen. Um eine Nachricht lesen zu können bedarf es gegenüber der symmetrischen Verschlüsselung nicht nur einen sondern zwei Schlüssel. Jener Schlüssel der zur Kodierung der Nachricht dient wird “public-key” oder “öffentlicher Schlüssel” genannt. Für die Entschlüsselung wird jedoch ein weiterer Schlüssel, der “private-key” oder “privater Schlüssel”, benötigt. Beide Schlüssel werden hier nicht vom Sender der Nachricht erstellt sondern vom Empfänger. Wichtig ist hier, dass nur der öffentliche Schlüssel bekannt gegeben wird. Jeder Besitzer des öffentlichen Schlüssels hat nun die Möglichkeit dem Empfänger eine verschlüsselte Nachricht zukommen zu lassen. Jedoch kann nur der Empfänger solche Nachrichten auch entschlüsseln, da er die einzige Person ist, welche den privaten Schlüssel besitzt.\\\\
-Das \textbf{RSA-Verfahren} ist das bekannteste und wohl am meist verbreitete Modell der Public-Key-Verschlüsselung. Dieses Verfahren wurde 1977 von Roland \textbf{R}ivest, Adi \textbf{S}hamir und Leonard \textbf{A}dleman benannt und basiert auf einem von Diffie und Hellmann entwickelten Verfahren zum sicheren Schlüsselaustausch (vgl. \cite[105]{RempeGillen2009}).
+Das \textbf{RSA-Verfahren} ist das bekannteste und wohl am meist verbreitete Modell der Public-Key-Verschlüsselung. Dieses Verfahren wurde 1977 von Roland \textbf{R}ivest, Adi \textbf{S}hamir und Leonard \textbf{A}dleman benannt und basiert auf einem von Diffie und Hellmann entwickelten Verfahren zum sicheren Schlüsselaustausch (Rempe und Waldecker 2009: 105).
 
 \section{Zusammenhang von Primzahlen und der Kryptographie}
 
@@ -516,8 +487,8 @@ Das \textbf{RSA-Verfahren} ist das bekannteste und wohl am meist verbreitete Mod
 \subsection{Wann ist eine Nummer ein perfektes Quadrat? - Newton Methode}
 \newpage
 
-\section*{}
-\addcontentsline{toc}{section}{\protect{}Literatur}
+\section*{Literaturverzeichnis}
+\addcontentsline{toc}{section}{\protect{}Literaturverzeichnis}
 \printbibliography
 
 \newpage
